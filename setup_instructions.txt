@@ -1,0 +1,140 @@
+Setting up a New Server and Deploying the Confluence Python Application
+
+Prerequisites:
+
+- A DigitalOcean account
+- SSH key (private and public key pair)
+- Git repository URL for the Confluence Python application
+
+Steps:
+
+1. Create a new DigitalOcean Droplet:
+   - Log in to your DigitalOcean account.
+   - Click on the "Create" button and select "Droplets".
+   - Choose an image (e.g., Ubuntu 20.04 LTS).
+   - Select a plan and choose a datacenter region.
+   - Add your SSH key for secure access to the droplet.
+   - Click "Create Droplet" to launch the new server.
+
+
+2. Connect to the server via SSH:
+   - Open a terminal or command prompt.
+   - Run the following command to connect to the server:
+     
+     ssh root@<server_ip_address>
+     
+   - Replace <server_ip_address> with the IP address of your DigitalOcean droplet.
+
+
+3. Update the system packages:
+   - Run the following commands to update the system packages:
+     
+     sudo apt update
+     sudo apt upgrade
+     
+
+4. Install Python and virtual environment:
+   - Install Python and the necessary packages:
+     
+     sudo apt install python3 python3-venv
+     
+
+5. Create and activate a virtual environment:
+   - Create a new virtual environment named "confluence":
+     
+     python3 -m venv confluence
+     
+   - Activate the virtual environment:
+     
+     source confluence/bin/activate
+     
+
+6. Add environment variables:
+   - Open the ~/.profile file:
+     
+     vim ~/.profile
+     
+   - Add the following lines at the end of the file:
+     
+     export DISCORD_BOT_KEY='your_discord_bot_key'
+     export OPENAI_API_KEY='your_openai_api_key'
+     
+   - Replace 'your_discord_bot_key' and 'your_openai_api_key' with the actual values for each environment variable.
+   - Save the file and exit the editor.
+   - Load the updated environment variables:
+     
+     source ~/.profile
+     
+
+7. Create a directory for GitHub repositories:
+   - Create a directory named "github":
+     
+     mkdir github
+     
+   - Navigate to the newly created directory:
+     
+     cd github
+     
+
+8. Generate an SSH key:
+   - Run the following command to generate an SSH key:
+     
+     ssh-keygen
+     
+   - Press Enter to accept the default file location (~/.ssh/id_rsa).
+   - Press Enter twice to skip setting a passphrase.
+
+
+9. Add the SSH key to your GitHub account:
+   - Display the public key:
+     
+     cat ~/.ssh/id_rsa.pub
+     
+   - Copy the entire output, starting with "ssh-rsa" and ending with a comment.
+   - Go to your GitHub account settings.
+   - Click on "SSH and GPG keys" in the left sidebar.
+   - Click on the "New SSH key" button.
+   - Give your key a title and paste the copied public key into the "Key" field.
+   - Click on the "Add SSH key" button to save the key.
+
+
+10. Clone the Confluence Git repository:
+    - Run the following command to clone the repository:
+      
+      git clone git@github.com:speakerjohnash/confluence.git
+      
+    - The repository will be cloned into a directory named "Confluence" inside the "github" directory.
+
+
+11. Install the Confluence application dependencies:
+    - Navigate to the cloned repository directory:
+      
+      cd Confluence
+      
+    - With the virtual environment activated, install the dependencies:
+      
+      pip install -e .
+      
+
+12. Generate a key for your module:
+    - Run the following command to generate a key:
+      
+      comx key create your_key_name
+      
+    - Replace your_key_name with a descriptive name for your key.
+
+
+13. Serve the Confluence module:
+    - Run the following command to serve the module:
+      
+      comx module serve Confluence.commune_confluence.AskGroupModule your_key_name
+      
+    - Replace your_key_name with the name of the key you generated in step 12.
+
+
+14. Register the Confluence module (optional):
+    - Run the following command to register the module:
+      
+      comx module register Confluence.commune_confluence.AskGroupModule your_key_name
+      
+    - Replace your_key_name with the name of the key you generated in step 12.
