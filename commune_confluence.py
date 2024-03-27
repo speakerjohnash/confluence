@@ -10,7 +10,7 @@ from discord import app_commands
 from discord.ui import Button, View, TextInput, Modal
 from discord.ext import commands
 
-from communex.module.module import Module
+from communex.module.module import Module, ModuleServer
 
 discord_key = os.getenv("DISCORD_BOT_KEY")
 openai.api_key = os.getenv("OPENAI_API_KEY")
