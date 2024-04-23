@@ -12,6 +12,7 @@ from discord.ext import commands
 
 from communex.module.module import Module
 from communex.module.server import ModuleServer
+from communex.compat.key import classic_load_key
 
 discord_key = os.getenv("DISCORD_BOT_KEY")
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -127,7 +128,7 @@ async def get_guild_members(guild, target_names=None):
 
     return members
 
-class AskGroupModule(Module):
+class AskGroup(Module):
     def __init__(self):
         super().__init__()
 
@@ -269,8 +270,9 @@ if __name__ == "__main__":
 
     import uvicorn
 
-    model = AskGroupModule()
-    model_server = ModuleServer(model)
+    model = AskGroup()
+    key = classic_load_key("confluence_key")
+    model_server = ModuleServer(model, key)
     app = model_server.get_fastapi_app()
 
     uvicorn.run(app, host="127.0.0.1", port=8000)
